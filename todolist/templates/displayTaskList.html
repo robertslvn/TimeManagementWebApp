@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+	{% block tasksMenu %}
+	{% endblock %}
+	{% block taskList %}
+		
+		{% if tasks.count > 0 %}
+			<div class="dd" id="nestable">
+				<ol class="dd-list">
+				{% for task in tasks %} 
+					<li class="dd-item dd3-item">
+						<div class="dd-handle" taskid="{{task.id}}">Title: {{ task.name }}. Description: {{ task.description }}. Sort order: {{ task.sort_order }}</div>
+						{% if task.childTasks != None %}
+							<ol class="dd-list">
+							{% for subtask in task.childTasks.all|dictsort:"sort_order" %}
+								<li class="dd-item dd3-item">
+									<div class="dd-handle" taskid="{{subtask.id}}">Title: {{ subtask.name }}. Description: {{ subtask.description }}. Sort order: {{ subtask.sort_order }}</div>
+								</li>
+							{% endfor %}
+							</ol>
+						{% endif %}
+					</li>
+				{% endfor %}
+				</ol>
+			</div>
+		{% else %}
+			<div>No tasks to display</div>
+		{% endif %}
+			
+	{% endblock %}
+{% endblock %}

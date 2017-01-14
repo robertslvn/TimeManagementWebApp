@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>{% block title %}Todoable{% endblock title %}</title>
+                      
+        <script src="{% static 'newlist/jquery-3.1.1.js' %}"></script>
+  <script src="{% static 'js/jquery-ui.js' %}"></script>
+ 	                <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link rel="stylesheet" href="{% static 'css/nestableover.css' %}" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <script type="text/javascript" src="{% static 'newlist/jquery.nestable.js' %}"></script>
+                <script src="{% static 'js/newtasks.js' %}"></script> 
+
+
+        {% block pagescripts %}{% endblock pagescripts %}
+    </head>
+
+    <body>
+		 <nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+		      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'logo.png' %}" class="logoimg">Dashboard</a>
+		    </div>
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		      <ul class="nav navbar-nav">
+		        {% if user.is_authenticated %}
+		    	<li><a href="{% url 'tasks' %}"><span class="glyphicon glyphicon-ok"></span> Task Manager</a></li>
+		    	<li><a href="{% url 'habits-list' %}"><span class="glyphicon glyphicon-repeat"></span> Habit Tracker</a></li>
+		    	<li><a href="{% url 'friends' %}"><i class="fa fa-users"></i> Friends</a></li>
+		    	<li><a href="{% url 'groups' %}"><span class="glyphicon glyphicon-globe"></span> Groups</a></li>
+		        {% endif %}
+		      </ul>
+		      <ul class="nav navbar-nav navbar-right">
+		        {% if user.is_authenticated %}
+		            <li><a href="{% url 'account' %}"><span class="glyphicon glyphicon-user"></span> {{request.user.username}}</a></li>
+		            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+		        {% else %}
+		        <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+		        <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		        {% endif %}
+				</ul>
+		    </div>
+		  </div>
+		</nav>
+        <div id="mainWrapper">
+    	{% block content %}{% endblock content %}
+    	</div>
+    </body>
+</html>

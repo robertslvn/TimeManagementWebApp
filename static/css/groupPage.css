@@ -1,0 +1,23 @@
+
+.vert-center-parent {
+	position: relative;
+}
+
+.vert-center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-row {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.right-cell {
+	margin-left: 20px;
+}
+
+li {
+	list-style-type:none;
+}

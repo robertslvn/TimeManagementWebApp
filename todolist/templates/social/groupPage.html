@@ -1,0 +1,103 @@
+{% extends "taskp.html" %}
+
+{% load social %}
+{% load static %}
+
+{% block pagescripts %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/groupPage.css' %}" />
+{% endblock %}
+
+
+
+{% block menuHeader %}
+<div class="container-fluid">
+	<div class="row">
+		<h2 class="col-lg-6">{{ group.name }}</h2>
+		{% if group|isOwner:request.user %}
+		<div class="col-lg-6">
+			<form method="post" class="form-inline">
+				{% csrf_token %}
+				{{ changeGroupNameForm }}
+				<button type="submit" class="btn btn-success">Change Group Name</button>
+			</form>
+		</div>
+		
+		<div class="col-lg-6 header-row">
+			<form method="post" class="form-inline">
+				{% csrf_token %}
+				<input type="hidden" name="deleteGroup" value="True"/>
+				<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure? This cannot be undone.')">Delete Group</button>
+			</form>
+		</div>
+		{% endif %}
+	</div>
+	
+	{% if message == "userNotFound" %}
+    	<div class="alert alert-danger">Could not add {{addUsername}}. You may only add friends!</div>
+    {% endif %}
+	<div class="row">
+		<h3 class="col-lg-6">Members ({{group.members.count}}):</h3>
+		{% if group|isAdmin:request.user %}
+		<div class="col-lg-6 header-row">
+			<form method="post" class="form-inline">
+				{% csrf_token %}
+				{{ addUserForm }}
+				<button type="submit" class="btn btn-success">Add User</button>
+			</form>
+		</div>
+		{% endif %}
+	</div>
+	
+	<ul>
+		{% for member in group.members.all %}
+			<li><table><tr><td>
+				{% if request.user.extenduser|isFriend:member %}
+					<a href="{% url 'viewFriend' member.username %}">
+						<h4>{{ member.username }} {% if group|isOwner:member %}(Owner){% elif group|isAdmin:member %}(Admin){% endif %}</h4>
+					</a>
+				{% else %}
+					<h4>{{ member.username }} {% if group|isOwner:member %}(Owner){% elif group|isAdmin:member %}(Admin){% endif %}</h4>
+				{% endif %}
+				</td>
+				{% if member != request.user %}
+					<td><div class="btn-toolbar right-cell">
+						{% if group.owner == request.user %}
+							<div class="btn-group">
+								{% if not group|isAdmin:member %}
+									<form action="{% url 'makeGroupAdmin' %}" method="post">
+										{% csrf_token %}
+										<input type="hidden" name="groupId" value="{{group.pk}}"/>
+										<input type="hidden" name="username" value="{{member.username}}"/>
+										<button type="submit" class="btn btn-info">Make Admin</button>
+									</form>
+								{% else %}
+									<form action="{% url 'demoteGroupAdmin' %}" method="post">
+										{% csrf_token %}
+										<input type="hidden" name="groupId" value="{{group.pk}}"/>
+										<input type="hidden" name="username" value="{{member.username}}"/>
+										<button type="submit" class="btn btn-info">Demote Admin</button>
+									</form>
+								{% endif %}
+							</div>
+						{% endif %}
+						{% hasHigherPrivileges group request.user member as higherPrivileges %}
+						{% if higherPrivileges %}
+							<div class="btn-group">
+								<form action="{% url 'removeUserFromGroup' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="groupId" value="{{group.pk}}"/>
+									<input type="hidden" name="username" value="{{member.username}}"/>
+									<button type="submit" class="btn btn-danger">Remove</button>
+								</form>
+							</div>
+						{% endif %}
+					</div></td>
+				{% endif %}
+			</tr></table></li>
+		{% endfor %}
+	</ul>
+	
+	<h3 class="col-lg-6">Tasks:</h3>
+</div>
+{% endblock %}

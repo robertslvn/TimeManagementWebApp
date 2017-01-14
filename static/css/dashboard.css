@@ -1,0 +1,68 @@
+#mainWrapper {
+  align-items: left;
+}
+#mainWrapper h2 {
+  font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 15px;
+}
+#mainWrapper h3 {
+  padding-left 10px;
+  font: 300 30px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 15px;
+  background-color: #0dc192;
+  /*background-color: #BDC3C7;*/
+}
+#mainWrapper h4 {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 15px;
+  
+  background-color: #D1F2EB;
+  /*background-color: #E5E7E9;*/
+}
+
+#mainWrapper :not(h2) {
+  margin-left: 20px;
+
+}
+
+#mainWrapper ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#mainWrapper li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+
+#mainWrapper li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  width: 200px;
+   border-bottom: 1px solid #ccc;
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+
+#mainWrapper li:first-child a { border-top: 1px solid #ccc;}
+
+
+#mainWrapper li a:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+}
+
+#mainWrapper div {
+	padding-left: 20px;
+}
+h3 {
+	padding-left: 10px;
+}
+h4 {
+	padding-left: 10px;
+}

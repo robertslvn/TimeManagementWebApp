@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% load mptt_tags %}
+{% load social %}
+{% block menuHeader %}
+{% endblock %}
+
+{% if not viewingFriend and not viewingGroup or viewingGroup and group|isAdmin:request.user %}
+<div class="dd" id="nestable3">
+  <div id="taskmenu">
+	  <span class="taskmenuitem quickadd">Quick Add <span class="glyphicon glyphicon-pencil"></span></span>
+	  {% if not viewingGroup %}
+	  <span class="taskmenuitem"><a href="{% url 'add_todo' %}">Detailed Add <span class=" glyphicon glyphicon-tasks"></span></a></span>
+	  <span class="taskmenuitem"><a href="/matrix_tasks/">Matrix of Tasks <span class=" glyphicon glyphicon-th-large"></span></a></span>
+	  {% else %}
+  		<form action="{% url 'addGroupTask' %}" method="get" class="inline-form">
+			{% csrf_token %}
+			<input type="hidden" name="groupId" value="{{group.pk}}"/>
+			<button type="submit" class="taskmenuitem inline-btn">Detailed Add <span class=" glyphicon glyphicon-tasks"></span></button>
+		</form>
+	  {% endif %}
+	  <input type="text" class="quickaddbox" placeholder="type a task and press enter"/>
+  	  
+  </div>
+{% endif %}
+{% if nodes.count == 0 %}
+<h4 id="notasks">No tasks to display</h4>
+{% endif %}
+
+  <ol class="dd-list">
+
+      <ol class="dd-list">
+        {% recursetree nodes %}
+
+
+      <li class="dd-item dd3-item" data-id="{{ node.id }}">
+
+
+{% if viewingFriend %}
+        <div class="dd3-handle" style="cursor:not-allowed;">&nbsp;</div>
+{% else %}
+         <div class="dd-handle dd3-handle">&nbsp;</div>
+{% endif %}
+		{% if node.completed == True %}
+		<div class="dd3-content" style="opacity:0.5;text-decoration:line-through;">
+		{% else %}
+        <div class="dd3-content">
+        {% endif %}
+        
+        
+
+          <div class="pull-left">
+            <div class="checkbox no-margin">
+
+              <label>
+				{% if node.completed == True %}
+				  <input class="checkbox style-0" checked="checked" type="checkbox" name="{{ node.id }}"
+				{% else %}
+					<input class="checkbox style-0" type="checkbox" name="{{ node.id }}"
+				{% endif %}
+				{% if viewingFriend %}
+				disabled="disabled"
+				{% endif %}
+				><span class="font-xs">    	</span>
+			  </label>
+
+            </div>
+            
+          {% if not viewingFriend and not viewingGroup or viewingGroup and group|isAdmin:request.user %}
+	          {% if node.urgent == True %}
+	            <span class="importantT glyphicon glyphicon-fire"  data-toggle="tooltip" data-placement="top" setting="Urgent" title="Toggle Urgency" style="color:#ff4741;"></span> 
+	          {% else %}
+	            <span class="importantT glyphicon glyphicon-fire" data-toggle="tooltip" data-placement="top" setting="Not Urgent" title="Toggle Urgency" style="color:#ccc;"></span> 
+	          {% endif %}
+	      {% else %}
+	      	  {% if node.urgent == True %}
+	            <span class="importantT glyphicon glyphicon-fire"  data-toggle="tooltip" data-placement="top" title="Urgent" style="color:#ff4741;"></span> 
+	          {% else %}
+	            <span class="importantT glyphicon glyphicon-fire" data-toggle="tooltip" data-placement="top" title="Not Urgent" style="color:#ccc;"></span> 
+	          {% endif %}
+	      {% endif %}
+                    
+          {% if not viewingFriend and not viewingGroup or viewingGroup and group|isAdmin:request.user %}
+	          {% if node.important == True %}
+	           <span class="urgentT glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" setting="Important" title="Toggle Importance" style="color:#FBAC37;"></span> 
+	          {% else %}
+	           <span class="urgentT glyphicon glyphicon-star"  data-toggle="tooltip" data-placement="top" setting="Not Important" title="Toggle Importance" style="color:#ccc;"></span>  
+	          {% endif %}
+	      {% else %}
+	      	  {% if node.important == True %}
+	           <span class="urgentT glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Important" style="color:#FBAC37;"></span> 
+	          {% else %}
+	           <span class="urgentT glyphicon glyphicon-star"  data-toggle="tooltip" data-placement="top" title="Not Important" style="color:#ccc;"></span>  
+	          {% endif %}
+	      {% endif %}
+          
+          
+          {% if not viewingFriend and not viewingGroup %}
+	          {% if node.public == True %}
+	           <span class="publicT glyphicon glyphicon glyphicon-eye-open"  data-toggle="tooltip" data-placement="top" setting="Public" title="Toggle Privacy" style="color:#12C3E6;"></span> 
+	          {% else %}
+	           <span class="publicT glyphicon glyphicon glyphicon-eye-close"  data-toggle="tooltip" data-placement="top" setting="Private" title="Toggle Privacy" style="color:#ccc;"></span>  
+	          {% endif %}
+	          <span class="removeT glyphicon glyphicon-remove"  data-toggle="tooltip" data-placement="top" title="Delete" style="color:#ff4848"></span> 
+	      {% endif %}
+	      {% if viewingGroup and group|isAdmin:request.user %}
+	      	<span class="removeT glyphicon glyphicon-remove"  data-toggle="tooltip" data-placement="top" title="Delete" style="color:#ff4848;"></span>
+	      {% endif %}
+	      </div>
+		  
+          {% if not viewingFriend and not viewingGroup or viewingGroup and group|isAdmin:request.user %}
+          <span class="editable" >{{ node.name }}</span>
+          {% else %}
+          {{ node.name }}
+          {% endif %}
+          
+          
+        <span class="pull-right details-btn details-icon glyphicon glyphicon-info-sign" title="Show details"></span>
+                <span class="pull-right">
+        {% if not viewingFriend and not viewingGroup or viewingGroup and group|isAdmin:request.user %}		
+	        {% if node.duedate %}
+  	           	<input type='text' class='datepicker' style='visibility:hidden'>
+      	       	<span class='date' data-toggle="tooltip" data-placement="top" title="Click to Change">{{ node.duedate }}&nbsp;({{node.getDaysLeft}})&nbsp;</span>
+		     {% else %}
+             	<input type='text' class='datepicker' style='visibility:hidden'>
+      	      	<span class='date lighttext' data-toggle="tooltip" data-placement="top" title="Click to Change">No Due Date&nbsp;</span>
+		     {% endif %}
+		     
+		 {% else %}
+		 	{% if node.duedate %}
+      	       	<span data-toggle="tooltip" data-placement="top" title="Due Date">{{ node.duedate }}&nbsp;({{node.getDaysLeft}})&nbsp;</span>
+		    {% else %}
+      	      	<span class='lighttext' data-toggle="tooltip" data-placement="top" title="No Due Date">No Due Date&nbsp;</span>
+		    {% endif %}
+		 {% endif %}
+	     </span> 
+        <div class="details">
+			
+			{% if node.description %}
+	        	<div>Description: {{ node.description|linebreaks }}</div>
+	        {% endif %}
+
+	        {% if node.assignees.count > 0 %}
+	        	<div>Assignees: 
+	        		{% for assignee in node.assignees.all %}
+	        			{% if forloop.counter > 1 or node.assignees.count == 1 %}{{assignee}}{% else %}{{assignee}}, {% endif %}
+	        		{% endfor %}
+				</div>
+	        {% endif %}
+		</div>
+        
+        {% if not node.is_leaf_node %}
+
+        </div>
+
+
+        <ol class="dd-list">
+
+          {{ children }}
+
+        </ol>
+               
+        {% endif %}
+      </li>
+
+      {% endrecursetree %}
+    </ol>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block title %}Account Settings{% endblock %}
+
+{% block content %}
+  <div class="reglogin">
+  <h2>Change Email</h2>
+  {% if message == "emailSuccess" %}
+  	<div class="alert alert-success">Email successfully updated!</div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <button class="btn btn-default" type="submit">Update</button>
+  </form>
+  
+  <h2>Change Password</h2>
+  {% if message == "incorrectOldPassword" %}
+  	<div class="alert alert-danger">Incorrect old password</div>
+  {% elif message == "passwordsNotMatching" %}
+  	<div class="alert alert-danger">The entered new passwords did not match</div>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ passwordForm|bootstrap }}
+    <button class="btn btn-default" type="submit">Update</button>
+  </form>
+  </div>
+{% endblock %}

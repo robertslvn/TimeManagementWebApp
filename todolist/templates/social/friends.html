@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Friends{% endblock %}
+
+{% block pagescripts %}
+<link rel="stylesheet" href="{% static 'css/groupfriendlistpage.css' %}?{% now "U" %}"  />
+{% endblock pagescripts %}
+
+{% block content %}
+
+	{% if message == "friendSelf" %}
+		<div class="alert alert-danger">You can't friend yourself!</div>
+	{% elif message == "userNotFound" %}
+		<div class="alert alert-danger">Could not send request. The user '{{requestUsername}}' does not exist!</div>
+	{% elif message == "alreadyFriends" %}
+		<div class="alert alert-info">You are already friends with '{{requestUsername}}'!</div>
+	{% elif message == "alreadySent" %}
+		<div class="alert alert-info">You have already sent a friend request to '{{requestUsername}}'!</div>
+	{% elif message == "requestSent" %}
+		<div class="alert alert-success">Friend request sent to '{{requestUsername}}'!</div>
+	{% endif %}
+	
+	{% if request.user.extenduser.requests.count > 0 %}
+		<h2>Friend Requests</h2>
+		{% for friendRequest in request.user.extenduser.requests.all %}
+		<div>
+			<span>Accept friend request from {{friendRequest.user.username}}?</span>
+			<div class="btn-group request-btn">
+				<form class="request-btn" action="{% url 'handleFriendRequest' %}" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="friend" value="{{friendRequest.user.username}}"/>
+					<button type="submit" class="btn btn-success request-btn" name="accept" value="True">✓</button>
+				</form>
+			</div>
+			<div class="btn-group request-btn">
+				<form class="request-btn" action="{% url 'handleFriendRequest' %}" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="friend" value="{{friendRequest.user.username}}"/>
+					<button type="submit" class="btn btn-danger request-btn" name="accept" value="">✗</button>
+				</form>
+			</div>
+		</div>
+		{% endfor %}
+	{% endif %}
+	
+	<h2>Friends ({{friendsList.count}})</h2>
+	
+	{% if friendsList.count == 0 %}
+		<h4>You have not added any users to your friend list.</h4>
+	{% else %}
+		<ul>
+		{% for friend in friendsList %}
+			<li><a href="{% url 'viewFriend' friend.user.username %}">{{friend.user.username}}</a></li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	
+	<br>
+	<br>
+	<h2>Add Friend</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ addFriendForm }}
+		<button type="submit" class="btn btn-success">Send Friend Request</button>
+	</form>
+{% endblock %}

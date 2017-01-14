@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/habitformstyle.css' %}?{% now "U" %}"  />
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}"> 
+<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({changeYear: true, changeMonth: true});
+});
+</script>
+	<h1>Add a New Daily Habit</h1>
+	
+	<form action="{{ action }}" method="POST">
+	  {% csrf_token %}
+	  <ul>
+	  <li class="header"> Name or Description: </li>
+	  <li class="name"> {{form.name}}{{form.name.errors}} </li>
+	  <li class="header"> Start Date (MM/DD/YYYY): </li>
+	  <li class="date"> {{form.startdate}}{{form.startdate.errors}} </li>
+	  <li class="header"> End Date (MM/DD/YYYY): </li>
+	  <li class="date"> {{form.enddate}} {{form.enddate.errors}} </li>
+	  <li class="header"> Allow friends to view </li>
+	  <li class="date"> {{form.viewable_by_friends}} {{form.viewable_by_friends.errors}} </li>
+	  <li class="headerday"> Number of times the habit should be performed each day: <p>{{form.monday}}{{form.monday.errors}}</p> </li>
+	  </ul>
+	  <input id="save_habit2" type="submit" value="Save" />
+	</form>
+	
+	
+	<a class = "backbutton" href="{% url "habits-list" %}">Back to Habit List</a>
+	  
+	{% if habit.id %}
+		|
+	<a href="{% url "habits-delete" pk=habit.id %}">Delete</a>
+	{% endif %}
+{% endblock %}

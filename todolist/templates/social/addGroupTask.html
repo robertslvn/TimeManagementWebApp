@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load static %}
+
+{% block title %}Add Group Task{% endblock %}
+
+{% block pagescripts %}
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}"> 
+<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({changeYear: true, changeMonth: true});
+});
+</script>
+{% endblock %}
+
+
+{% block content %}
+	<h2>New Group Task:</h2>
+    <form method="post">
+        {% csrf_token %}
+		{{ form|bootstrap }}
+		<input type="hidden" name="groupId" value="{{groupId}}"/>
+		<button type="submit" class="btn btn-default">Add</button>
+	</form>
+
+{% endblock %}

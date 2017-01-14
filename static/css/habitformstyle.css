@@ -1,0 +1,26 @@
+li {list-style-type: none;
+}
+
+li.header {margin-top: 20px;}
+
+li.day {width: auto;
+float: left;}
+
+#save_habit { margin-top: 120px;
+}
+
+#save_habit2 { 
+	margin-bottom: 30px;
+	margin-top: 15px;
+	margin-left: 380px;
+}
+
+li.headerday {margin-top: 20px;
+margin-bottom: 20px;}
+
+p.sepa {text-align: center;
+margin-bottom: 30px;}
+
+h2#choosetype {text-align: center;
+margin-bottom: 40px;
+font-size: 30px;}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block pagescripts %}
+<link rel="stylesheet" href="{% static 'css/matrix_table.css' %}?{% now "U" %}" />
+{% endblock %}
+
+{% block content %}
+
+    <table class="tg">
+  
+  		<tr>
+    		<th class="tg-baqh">
+  	<a href="{% url 'tasks' %}">Back to Task Manager</a>
+    			
+    		</th>
+    		
+    		<th class="tg-0ql5">
+    			<h3>Urgent</h3>
+    		</th>
+    		
+    		<th class="tg-0ql5">
+    			<h3>Not Urgent</h3>
+    		</th>
+  		</tr>
+  		
+  		<tr>
+    		<td class="tg-0ql5">
+    			<h3>Important</h3>
+    		</td>
+    		
+    		<td class="tg-s5es">
+				{% for task in urg_imp %}
+					<ul>{{ task.name }}</ul>
+				{% endfor %}
+    		</td>
+    		
+    		<td class="tg-kl42">
+    			{% for task in Nurg_imp %}
+					<ul>{{ task.name }}</ul>
+				{% endfor %}
+    		</td>
+  		</tr>
+  
+  		<tr>
+    		<td class="tg-0ql5">
+    			<h3>Not Important</h3>
+    		</td>
+    		
+    		<td class="tg-9fnw">
+    			{% for task in urg_Nimp %}
+					<ul>{{ task.name }}</ul>
+				{% endfor %}
+    		</td>
+    		
+    		<td class="tg-lg2i">
+				{% for task in Nurg_Nimp %}
+					<ul>{{ task.name }}</ul>
+				{% endfor %}
+    		</td>
+  		</tr>
+	</table>
+    
+{% endblock %}

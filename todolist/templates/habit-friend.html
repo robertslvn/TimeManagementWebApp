@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% load extras_c %}
+
+
+<head>
+<style>
+{% createcss habit.id 0 %}
+</style>
+</head>
+<body>
+<link rel="stylesheet" href="{% static 'css/habitviewstyle.css' %}?{% now "U" %}"  />
+
+{% friendTest habit.created_by user.get_username as testfr %}
+
+
+{% if testfr == 'False' or habit.viewable_by_friends == False %}
+<p>You are not authorized to view this page.</p>
+{% elif testfr == 'True' %}
+ <table class = gradetable>
+  <tr>
+    <th>Current Grade:</th>
+  </tr>
+  <tr>
+    <td>{% grading habit.successes habit.fails %}</td>
+  </tr>
+</table>
+
+    <p class = habitheader>{{ habit.created_by }}'s Habit:</p>
+    <h1 class = habitname>{{ habit }}</h1>
+
+<div class = datefields>
+<p>Start Date: {{ habit.startdate }}</p>
+
+<p>End Date: {{ habit.enddate }}</p>
+</div>
+<p class = weekdayheader><b>Goal # of times to perform this habit:</b></p>
+<table class = weekdays>
+<tr>
+<td><p>Mon</p></td>
+<td><p>Tues</p></td>
+<td><p>Wed</p></td>
+<td><p>Thurs</p></td>
+<td><p>Fri</p></td>
+<td><p>Sat</p></td>
+<td><p>Sun</p></td>
+</tr>
+<tr>
+<td><p>{{ habit.monday}}</p></td>
+<td><p>{{ habit.tuesday }}</p></td>
+<td><p>{{ habit.wednesday }}</p></td>
+<td><p>{{ habit.thursday }}</p></td>
+<td><p>{{ habit.friday }}</p></td>
+<td><p>{{ habit.saturday }}</p></td>
+<td><p>{{ habit.sunday }}</p></td>
+</tr>
+</table>
+<table class = successfails>
+<tr>
+<th>Current # of Successes:</th>
+<th>Current # of Fails:</th>
+</tr>
+<tr>
+<td class = successnum>{{ habit.successes }}</td>
+<td class = failnum>{{ habit.fails }}</td>
+</tr>
+</table>
+
+<p> ____________________________________________________________________________________________________  </p>
+<p>{% calendarr habit.startdate.year habit.startdate.month habit.monday habit.tuesday habit.wednesday habit.thursday habit.friday habit.saturday habit.sunday habit.startdate.day habit.enddate.day habit.enddate.month habit.enddate.year habit.startdate.month habit.startdate.year habit.getid True%}</p>
+
+
+</body>
+{% endif %}
+{% endblock %}

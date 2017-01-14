@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% load extras_c %}
+
+{% redirecturl request.get_full_path as urlcheck %}
+{% if urlcheck == 1 %}
+{% updatecss request.get_full_path%}    
+<meta http-equiv="refresh" content="0; url=/habit_tracker" />
+{% endif %}
+    
+<head>
+<style>
+
+{% for habit in object_list %}
+{% if habit.created_by == user %}
+{% createcss habit.id 1 %}
+{% endif %}
+{% endfor %}
+</style>
+</head>
+<body>
+<link rel="stylesheet" href="{% static 'css/habitliststyle.css' %}?{% now "U" %}"  />
+
+
+	<h1>List of Habits</h1>
+	
+	{% for habit in object_list|dictsort:"name" %}
+	{% if habit.created_by == user %}
+	<div id = hlist>
+	<ul class = hullist>
+	    <li class="habit">
+	    <a href="{{ habit.get_absolute_url }}">
+	    <div>
+	      <p>{{ habit }}</p>
+	      <p class = date>Start Date: {{ habit.startdate }}</p>
+	      <p class = date>End Date: {{ habit.enddate }}</p>
+	    </div>
+	    </a>
+	    </li>
+	    {% quickviewonlist habit.monday habit.tuesday habit.wednesday habit.thursday habit.friday habit.saturday habit.sunday habit.id habit.startdate habit.enddate %}</p></li>
+	   
+	</ul>
+	</div>
+	{% endif %}
+	  {% endfor %}
+	<a class="btn btn-success" href="{% url "habits-new-type" %}">Add a New Habit</a>
+</body>
+
+{% endblock %}
+
+

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Add ToDo{% endblock %}
+{% block content %}
+ 
+<link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}"> 
+<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+<script>
+$(document).ready(function() {
+    $('.datepicker').datepicker({changeYear: true, changeMonth: true});
+});
+</script>
+
+
+	{% if added %}
+		<div class="alert alert-success">Successfully created your new Todo!</div>
+	{% endif %}
+	<h2>New Task:</h2>
+    <form method="post">
+        {% csrf_token %}
+		{{ form|bootstrap }}
+		<button type="submit" class="btn btn-default">Add</button>
+	</form>
+
+{% endblock %}

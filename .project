@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>djangolist</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.aptana.ide.core.unifiedBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.python.pydev.PyDevBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.python.pydev.pythonNature</nature>
+		<nature>org.python.pydev.django.djangoNature</nature>
+		<nature>com.aptana.ruby.core.rubynature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>django</name>
+			<type>2</type>
+			<location>/Library/anaconda/lib/python2.7/site-packages/django</location>
+		</link>
+	</linkedResources>
+</projectDescription>

@@ -1,0 +1,102 @@
+@import "compass/css3";
+
+
+
+.habit a {background-color: #eee;
+margin-top: 10px;
+margin-bottom: 10px;
+padding: 20px;}
+.date {font-size: 12px}
+h1 {
+  font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+.hullist li:not(#qlist) {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+  padding-right: 50px;
+  list-style-type: none;
+  display: inline-block;
+}
+
+.hullist li:first-child {
+  border-top: 1px solid #ccc;
+}
+
+.hullist li:not(#qlist) a {
+  text-decoration: none;
+  color: #000;
+
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+  display: block;
+  width: 575px;
+}
+
+.hullist li:not(#qlist) a:hover {
+  font-size: 30px;
+  background: #3A3A3A;
+  color: white;
+}
+
+.hullist li:not(#qlist) a:hover:not {
+  font-size: 10px;
+}
+
+#hlist {
+  margin-bottom: 30px;
+  width: 1500px;
+  margin-top: 25px;
+
+}
+
+.addlink {background-color: #eee;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 10px;
+padding-bottom: 10px;
+border: solid #ccc;
+
+}
+
+a:hover, a:visited, a:link, a:active 
+{text-decoration: none;
+}
+
+
+#qlist table td  {
+
+padding: 42px;
+padding-left: 15px;
+padding-right: 15px;
+
+text-align: center;
+background-color: #f9f9f9;
+}
+
+#qlist table th  {
+background-color: #eee;
+
+text-align: center;
+padding: 5px;
+padding-bottom: 1px;
+border: 1px solid black;
+}
+
+li#qlist {
+	display: inline-block;
+	vertical-align: top;
+	border: 1px solid #eee;
+
+
+}
+
+#dateline {
+	text-align: right;
+}

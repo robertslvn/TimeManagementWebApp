@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+	<div class="reglogin">
+	{% if message == "fromRegister" %}
+		<div class="alert alert-info">You have successfully registered. You may now log in!</div>
+	{% elif message == "passwordChanged" %}
+		<div class="alert alert-info">You have successfully changed your password. Please log in again!</div>
+	{% elif message == "invalidLogin" %}
+		<div class="alert alert-danger">Invalid login credentials. Please try again.</div>
+	{% endif %}
+
+	<h2>Login</h2>
+
+	<form method="post">
+		{% csrf_token %}
+{{ form|bootstrap }}
+		<button type="submit" class="btn btn-success">Login</button>
+	</form>
+	</div>
+{% endblock %}

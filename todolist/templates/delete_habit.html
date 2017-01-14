@@ -1,0 +1,10 @@
+<h1>Delete Habit</h1>
+
+<p>Are you sure you want to delete the habit {{ habit }}?</p>
+
+<form action="{% url "habits-delete" pk=habit.id %}" method="POST">
+  {% csrf_token %}
+
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "habits-list" %}">No, cancel.</a>
+</form>

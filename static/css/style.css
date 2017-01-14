@@ -1,0 +1,75 @@
+body {
+	margin-bottom: 10px;
+}
+.fa-users {
+	color:#0dc192;
+}
+#mainWrapper {
+    width:800px;
+    margin:0 auto;
+}
+#header {
+    margin-top:15px;
+}
+label {
+    display:block;
+}
+.navbar {
+	border-radius: 0px;
+}
+.navbar-inverse .navbar-brand {
+	color: #fff;
+}
+.navbar-inverse .navbar-nav > li > a {
+	color: #fff;
+}
+.navbar-inverse .navbar-nav > li:hover {
+	background-color:#000;
+	
+}
+.navbar-inverse .navbar-brand:hover {
+	color: #0dc192;
+	background-color:#000;
+}
+.logoimg {
+	width: 40px;
+	height: 40px;
+	margin-top: -10px;
+	float: left;
+	margin-right: 5px;
+}
+.lighttext {
+	color:#ddd;
+}
+.reglogin {
+	width:50%;
+	margin:0 auto;
+}
+.inline-form {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+.inline-btn {
+	border: none;
+	display: inline;
+	margin: 0px;
+	padding: 5px;
+}
+
+h2 {
+  font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 15px;
+}
+h3 {
+  font: 300 30px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 15px;
+}
+h4 {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 15px;
+}
+.navbar .glyphicon {
+	color: #0dc192;
+}
+

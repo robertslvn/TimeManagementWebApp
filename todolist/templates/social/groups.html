@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Groups{% endblock %}
+
+{% block content %}
+	<link rel="stylesheet" href="{% static 'css/groupfriendlistpage.css' %}?{% now "U" %}"  />
+	{% if request.user.extenduser.groupInvites.count > 0 %}
+		<h2>Group Invites</h2>
+		{% for groupInvite in request.user.extenduser.groupInvites.all %}
+			<span>Accept invite to group '{{groupInvite.group.name}}' from {{groupInvite.invitedBy.username}}?</span>
+			<form action="{% url 'handleGroupInvite' %}" method="post">
+				{% csrf_token %}
+				<button type="submit" class="btn btn-success" name="accept" value="True">✓</button>
+			</form>
+			<form action="{% url 'handleGroupInvite' %}" method="post">
+				{% csrf_token %}
+				<button type="submit" class="btn btn-danger" name="accept" value="">✗</button>
+			</form>
+
+		{% endfor %}
+	{% endif %}
+
+	<h2>Groups ({{request.user.groupsIn.count}})</h2>
+	
+	
+	{% if request.user.groupsIn.count == 0 %}
+		<h4>You are not in any groups.</h4>
+	{% else %}
+		<ul>
+		{% for group in request.user.groupsIn.all %}
+			<li><a href="{% url 'viewGroup' group.pk %}">{{group.name}}</a></li>
+			
+		{% endfor %}
+		</ul>
+	{% endif %}
+	
+	<br>
+	<br>
+	<h2>Create a New Group</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ createGroupForm }}
+		<input type="hidden" name="formName" value="createGroup"/>
+		<button type="submit" class="btn btn-success">Create</button>
+	</form>
+{% endblock %}

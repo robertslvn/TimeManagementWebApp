@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/habitformstyle.css' %}?{% now "U" %}"  />
+<h2 id = choosetype> Select Habit Type:</h2>
+<p class = sepa><a class="btn btn-success" href="{% url "habits-new2" %}">Daily Habit</a></p>
+
+<p class = sepa><a class="btn btn-success" href="{% url "habits-new" %}">Weekly Habit</a></p>
+{% endblock %}

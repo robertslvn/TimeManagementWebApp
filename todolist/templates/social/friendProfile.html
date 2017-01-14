@@ -1,0 +1,44 @@
+{% extends "taskp.html" %}
+
+{% load static %}
+
+{% block pagescripts %}
+<link rel="stylesheet" href="{% static 'css/habitliststylefriend.css' %}?{% now "U" %}"  />
+{% endblock %}
+
+{% block menuHeader %}
+<div class="row">
+	<h2 class="col-lg-8">{{ friend.username }}'s Habits</h2>
+	
+	<div class="col-lg-4 unfriend">
+		<form method="post" class="form-inline">
+			{% csrf_token %}
+			<input type="hidden" name="unfriend" value="True"/>
+			<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to unfriend this user?')">Unfriend</button>
+		</form>
+	</div>
+
+</div>
+
+
+{% if habits.count == 0 %}
+	<h4 id = nohabits>No habits to display</h4>
+{% endif %}
+<div id = hlist>
+	<ul class = hullist>
+	  {% for habit in habits %}
+	    <li class="habit">
+	    <a href="{{ habit.get_absolute_url_friend }}">
+	    <div>
+	      <p>{{ habit }}</p>
+	      <p class = date>Start Date: {{ habit.startdate }}</p>
+	      <p class = date>End Date: {{ habit.enddate }}</p>
+	    </div>
+	    </a>
+	    </li>
+	  {% endfor %}
+	</ul>
+	</div>
+	<h2>{{ friend.username }}'s Tasks</h2>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block pagescripts %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}?{% now "U" %}"  />
+{% endblock pagescripts %}
+
+
+{% block content %}
+<h2>Upcoming Deadlines</h2>
+<br>
+
+<h3>Today</h3>
+<h4>Tasks:</h4>
+{% if upcoming.today.tasks.count > 0 %}
+	<ul>
+	{% for task in upcoming.today.tasks %}
+		<li><a href="{% url 'tasks' %}">{{task.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No tasks due</div>
+{% endif %}
+
+<h4>Group Tasks:</h4>
+{% if upcoming.today.grouptasks.count > 0 %}
+	<ul>
+	{% for task in upcoming.today.grouptasks %}
+		<li><a href="{% url 'viewGroup' task.group.pk %}">{{task.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No group tasks due</div>
+{% endif %}
+
+<h4>Habits:</h4>
+{% if upcoming.today.habits|length > 0 %}
+	<ul>
+	{% for habit in upcoming.today.habits %}
+		<li><a href="{% url 'habits-view' habit.pk %}">{{habit.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No habits to complete</div>
+{% endif %}
+
+
+<h3>Tomorrow</h3>
+<h4>Tasks:</h4>
+{% if upcoming.tomorrow.tasks.count > 0 %}
+	<ul>
+	{% for task in upcoming.tomorrow.tasks %}
+		<li><a href="{% url 'tasks' %}">{{task.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No tasks due</div>
+{% endif %}
+
+<h4>Group Tasks:</h4>
+{% if upcoming.tomorrow.grouptasks.count > 0 %}
+	<ul>
+	{% for task in upcoming.tomorrow.grouptasks %}
+		<li><a href="{% url 'viewGroup' task.group.pk %}">{{task.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No group tasks due</div>
+{% endif %}
+
+<h4>Habits:</h4>
+{% if upcoming.tomorrow.habits|length > 0 %}
+	<ul>
+	{% for habit in upcoming.tomorrow.habits %}
+		<li><a href="{% url 'habits-view' habit.pk %}">{{habit.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No habits to complete</div>
+{% endif %}
+
+
+<h3>This Week</h3>
+<h4>Tasks:</h4>
+{% if upcoming.week.tasks.count > 0 %}
+	<ul>
+	{% for task in upcoming.week.tasks %}
+		<li><a href="{% url 'tasks' %}">{{task.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No tasks due</div>
+{% endif %}
+
+<h4>Group Tasks:</h4>
+{% if upcoming.week.grouptasks.count > 0 %}
+	<ul>
+	{% for task in upcoming.week.grouptasks %}
+		<li><a href="{% url 'viewGroup' task.group.pk %}">{{task.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No group tasks due</div>
+{% endif %}
+
+<h4>Habits:</h4>
+{% if upcoming.week.habits|length > 0 %}
+	<ul>
+	{% for habit in upcoming.week.habits %}
+		<li><a href="{% url 'habits-view' habit.pk %}">{{habit.name}}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<div>No habits to complete</div>
+{% endif %}
+
+{% endblock %}

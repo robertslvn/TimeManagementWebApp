@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  	<div class="reglogin">
+  <h2>Register</h2>
+  {% if message == "userNameTaken" %}
+    <div class="alert alert-danger"> That username is not available. Please select a different name.</div>
+  
+  {% elif message == "invalidUserName" %}
+    <div class="alert alert-danger"> That username is not valid. Usernames may only contain characters, numbers, and underscores.</div>
+  
+  {% elif message == "passwordsNotMatching" %}
+    <div class="alert alert-danger">The entered passwords did not match. Please try again.</div>
+  
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <button type="submit" class="btn btn-success">Register</button>
+  </form>
+  </div>
+{% endblock %}

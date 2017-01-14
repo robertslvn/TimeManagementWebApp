@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% load extras_c %}
+{% redirecturl request.get_full_path as urlcheck %}
+{% if urlcheck == 1 %}
+{% updatecss request.get_full_path%}    
+{% with name="/" nam=habit.id %}     
+<meta http-equiv="refresh" content="0; url={{name}}{{nam}}" />
+{% endwith %}
+{% endif %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+{% createcss habit.id 0 %}
+</style>
+</head>
+<body>
+<link rel="stylesheet" href="{% static 'css/habitviewstyle.css' %}?{% now "U" %}"  />
+
+
+ <table class = gradetable>
+  <tr>
+    <th>Current Grade:</th>
+  </tr>
+  <tr>
+    <td>{% grading habit.successes habit.fails %}</td>
+  </tr>
+</table>
+
+    <p class = habitheader>Habit:</p>
+    <h1 class = habitname>{{ habit }}</h1>
+
+<div class = datefields>
+<p>Start Date: {{ habit.startdate }}</p>
+
+<p>End Date: {{ habit.enddate }}</p>
+</div>
+<p class = weekdayheader><b>Goal # of times to perform this habit:</b></p>
+<table class = weekdays>
+<tr>
+<th><p>Mon</p></th>
+<th><p>Tues</p></th>
+<th><p>Wed</p></th>
+<th><p>Thurs</p></th>
+<th><p>Fri</p></th>
+<th><p>Sat</p></th>
+<th><p>Sun</p></th>
+</tr>
+<tr>
+<td><p>{{ habit.monday}}</p></td>
+<td><p>{{ habit.tuesday }}</p></td>
+<td><p>{{ habit.wednesday }}</p></td>
+<td><p>{{ habit.thursday }}</p></td>
+<td><p>{{ habit.friday }}</p></td>
+<td><p>{{ habit.saturday }}</p></td>
+<td><p>{{ habit.sunday }}</p></td>
+</tr>
+</table>
+<table class = successfails>
+<tr>
+<th>Current # of Successes:</th>
+<th>Current # of Fails:</th>
+</tr>
+<tr>
+<td class = successnum>{{ habit.successes }}</td>
+<td class = failnum>{{ habit.fails }}</td>
+</tr>
+</table>
+
+{% with nam=habit.id %} 
+{% if habit.viewable_by_friends == True %}
+	<p>This habit is shared with your friends <a class = sharebutton href="/{{nam}}!{{nam}}?fr">Unshare it</a></p>
+{% else %}
+	<p>This habit is hidden from your friends <a class = sharebutton href="/{{nam}}!{{nam}}?fr">Share it</a></p>
+{% endif %}
+{% endwith %}
+
+
+<a class="btn btn-default" href="{% url "habits-list" %}">  Back to Habit List</a>  
+<form action="{% url "habits-delete" pk=habit.id %}" method="POST">
+  {% csrf_token %}
+  <button type="submit" id = delbut class="btn btn-default" onclick="return confirm('Are you sure you want to delete this habit? This cannot be undone.')">Delete this Habit</button>
+</form>
+
+
+<p> ____________________________________________________________________________________________________  </p>
+<p>{% calendarr habit.startdate.year habit.startdate.month habit.monday habit.tuesday habit.wednesday habit.thursday habit.friday habit.saturday habit.sunday habit.startdate.day habit.enddate.day habit.enddate.month habit.enddate.year habit.startdate.month habit.startdate.year habit.getid False%}</p>
+
+
+</body>
+</html>
+
+{% endblock %}
