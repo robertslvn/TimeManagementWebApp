@@ -7,7 +7,6 @@ vagrant up --provision
 URL: http://localhost:8000/
 
 
-Sample Users: User1/pass    User2/pass
 
 Project Features:
 
